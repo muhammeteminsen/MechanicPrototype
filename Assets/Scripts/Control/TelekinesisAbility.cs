@@ -1,33 +1,62 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TelekinesisAbility : MonoBehaviour
 {
+    [Header("Layers")]
+    [SerializeField] private GameObject layers;
     [SerializeField] private Image forwardLayer;
     [SerializeField] private Image backLayer;
+    [Header("Settings")]
     [SerializeField] private float decreaseTime = 0.1f;
     [SerializeField] private float increaseTime = 3;
     [SerializeField] private float abilityAmount;
+    [Header("Feedback")]
+    [SerializeField] private Color abilityOverColor = Color.red;
+    [SerializeField] private Color abilityOverColorBack = Color.brown;
+    [SerializeField] private Color abilityNormalColor = Color.white;
     private float _defaultAbilityAmount;
     private CancellationTokenSource _cts;
+    private float _initialLayersScaleY;
+    private bool _isAbilityOver;
+    private readonly Dictionary<Image, float> _layerDict = new Dictionary<Image, float>();
 
     private void Awake()
     {
-        _defaultAbilityAmount = forwardLayer.fillAmount;
         _cts = new CancellationTokenSource();
     }
 
-    public async UniTaskVoid DecreaseBar()
+    private void Start()
     {
+        _defaultAbilityAmount = forwardLayer.fillAmount;
+        _initialLayersScaleY = layers.transform.localScale.y;
+        Image[] layersImage = layers.GetComponentsInChildren<Image>(includeInactive: true);
+        foreach (var layer in layersImage)
+            _layerDict.Add(layer, layer.color.a);
+    }
+
+    public async UniTaskVoid Decrease()
+    {
+        layers.transform.DOScaleY(_initialLayersScaleY, 0.1f);
+        foreach (var kvp in _layerDict)
+            kvp.Key.DOFade(kvp.Value, 0.1f);
         float initialAmount = forwardLayer.fillAmount;
-        float targetAmount = initialAmount - abilityAmount / 100;
+        float targetAmount = Mathf.Clamp01(initialAmount - abilityAmount / 100);
         try
         {
             float elapsed = 0f;
             _defaultAbilityAmount = targetAmount;
+            if (_defaultAbilityAmount <= 0)
+            {
+                backLayer.color = abilityOverColorBack;
+                _isAbilityOver = true;
+            }
             while (elapsed < decreaseTime)
             {
                 elapsed += Time.deltaTime;
@@ -35,33 +64,49 @@ public class TelekinesisAbility : MonoBehaviour
                 forwardLayer.fillAmount = Mathf.Lerp(forwardLayer.fillAmount, targetAmount, t);
                 await UniTask.Yield(cancellationToken: _cts.Token);
             }
+            if (_isAbilityOver)
+                forwardLayer.color = abilityOverColor;
+            forwardLayer.fillAmount = targetAmount;
         }
         catch (OperationCanceledException)
         {
-            Debug.LogWarning("sadasadasdfffffds");
+            Debug.LogWarning("DecreaseBar canceled");
         }
-        
+        finally
+        {
+            Debug.Log("DecreaseBar finished");
+        }
     }
-    public async UniTaskVoid IncreaseBar()
+    
+    
+    public async UniTaskVoid Increase()
     {
         try
         {
-            await UniTask.WaitForSeconds(1f, cancellationToken: _cts.Token);
+            await UniTask.WaitForSeconds(2f, cancellationToken: _cts.Token);
+            if (_isAbilityOver)
+                backLayer.color = new Color(abilityNormalColor.r, abilityNormalColor.g, abilityNormalColor.b, .2f);  
+            float initialAmount = forwardLayer.fillAmount;
             float targetAmount = 1;
             float elapsed = 0f;
-            float initialAmount = forwardLayer.fillAmount;
             while (elapsed < increaseTime)
             {
-                if (Mathf.Approximately(initialAmount, targetAmount)) break;
+                if (Mathf.Approximately(forwardLayer.fillAmount, targetAmount)) break;
                 elapsed += Time.deltaTime;
                 float t = Mathf.Clamp01(elapsed / increaseTime);
                 forwardLayer.fillAmount =
-                    Mathf.Lerp(forwardLayer.fillAmount, targetAmount, t);
+                    Mathf.Lerp(initialAmount, targetAmount, t);
                 _defaultAbilityAmount = forwardLayer.fillAmount;
                 await UniTask.Yield(cancellationToken: _cts.Token);
-               
             }
+            _isAbilityOver = false;
+            forwardLayer.color = abilityNormalColor;
             forwardLayer.fillAmount = targetAmount;
+            _defaultAbilityAmount = targetAmount;
+            float endValue = 0;
+            layers.transform.DOScaleY(endValue, 0.2f);
+            foreach (var kvp in _layerDict)
+                kvp.Key.DOFade(endValue, 0.1f);
         }
         catch (OperationCanceledException)
         {
@@ -75,15 +120,19 @@ public class TelekinesisAbility : MonoBehaviour
 
     public bool IsUseAbility()
     {
-        return _defaultAbilityAmount > abilityAmount/100;
+        return !_isAbilityOver;
     }
-    public void CancellationToken()
+
+    private void OnDestroy()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+    }
+
+    public void Cancellation()
     {
         _cts?.Cancel();
         _cts?.Dispose();
         _cts = new CancellationTokenSource();
     }
-    
-    
-    
 }

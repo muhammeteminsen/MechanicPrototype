@@ -144,7 +144,7 @@ RectTransform:
   m_GameObject: {fileID: 102491737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3506, y: 2.3506, z: 2.3506}
+  m_LocalScale: {x: 2.3506, y: -2.3506, z: 2.3506}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1260118421}
@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 465}
+  m_AnchoredPosition: {x: 0, y: 511}
   m_SizeDelta: {x: 205, y: 12.282349}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &125895767
@@ -875,7 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.29803923}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.2}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2831,7 +2831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Telekenise
   animationController: {fileID: 6982812146328379582}
   audioController: {fileID: 0}
-  maxDistance: 50
+  maxDistance: 25
   throwForce: 50
   holdingPoint: {fileID: 1559586685}
   holdingSpeed: 150
@@ -2878,11 +2878,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d625e6a2f7b2dc64096a171c6c1abe10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TelekinesisAbility
+  layers: {fileID: 102491737}
   forwardLayer: {fileID: 1260118422}
   backLayer: {fileID: 427584969}
-  decreaseTime: 0.4
-  increaseTime: 500
+  decreaseTime: 0.6
+  increaseTime: 4
   abilityAmount: 50
+  abilityOverColor: {r: 1, g: 0, b: 0, a: 1}
+  abilityOverColorBack: {r: 0.6470588, g: 0.1647059, b: 0.1647059, a: 1}
+  abilityNormalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1176036049
 GameObject:
   m_ObjectHideFlags: 0
@@ -3334,7 +3338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.8235294}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -7,8 +7,8 @@ public class TelekinesisLiftState : StateAction<Telekinesis>
     {
         if (telekinesis.Closest.TryGetComponent(out ITelekenisable telekinesisable))
         {
-            telekinesis.TelekinesisAbility.CancellationToken();
-            telekinesis.TelekinesisAbility.DecreaseBar().Forget();
+            telekinesis.TelekinesisAbility.Cancellation();
+            telekinesis.TelekinesisAbility.Decrease().Forget();
             telekinesisable.Initialize(telekinesis);
             telekinesisable.Lift(telekinesis.liftPoint, telekinesis.liftOffset, telekinesis.liftSpeed,
                 telekinesis.liftDuration, telekinesis /* on finally change state */ ).Forget();
