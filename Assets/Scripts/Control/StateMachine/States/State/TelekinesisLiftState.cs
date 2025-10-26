@@ -21,7 +21,6 @@ public class TelekinesisLiftState : StateAction<Telekinesis>
         if (Input.GetKeyDown(KeyCode.E) && telekinesis.Closest.TryGetComponent(out ITelekenisable telekinesisable))
         {
             telekinesisable.CancellationToken();
-            return;
         }
     }
 }

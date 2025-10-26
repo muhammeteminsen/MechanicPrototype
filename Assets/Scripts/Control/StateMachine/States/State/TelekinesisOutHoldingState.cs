@@ -11,6 +11,7 @@ public class TelekinesisOutHoldingState : BaseHoldingState
     public override void OnUpdate(Telekinesis telekinesis)
     {
         base.OnUpdate(telekinesis);
+        if (IsThrow) return;
         if (telekinesis.Direction().magnitude < telekinesis.holdingThreshold)
             telekinesis.ChangeState(new TelekinesisHoldingState());
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class BaseHoldingState : StateAction<Telekinesis>
 {
     protected ITelekenisable Telekinesisable;
+    protected bool IsThrow;
     public override void OnEnter(Telekinesis telekinesis)
     {
         if (telekinesis.Closest.TryGetComponent(out ITelekenisable telekinesisable))
@@ -14,12 +15,17 @@ public class BaseHoldingState : StateAction<Telekinesis>
         if (Input.GetKeyDown(KeyCode.E))
         {
             telekinesis.ChangeState(new TelekinesisThrowState());
-            return;
+            IsThrow = true;
         }
     }
     public override void OnFixedUpdate(Telekinesis telekinesis)
     {
         Telekinesisable?.Holding(telekinesis.holdingPoint, telekinesis.holdingSpeed,
             telekinesis.MainCamera);
+    }
+
+    public override void OnExit(Telekinesis telekinesis)
+    {
+        IsThrow = false;
     }
 }

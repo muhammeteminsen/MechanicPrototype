@@ -13,13 +13,13 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
     {
         if (Input.GetKeyDown(KeyCode.E) && telekinesis.TelekinesisAbility.IsUseAbility())
         {
-            telekinesis.ChangeState(new TelekinesisLiftState()); 
+            telekinesis.ChangeState(new TelekinesisLiftState());
             return;
         }
+
+        UpdateVisibleObject(telekinesis);
         RaycastController(telekinesis);
         OutlineController(telekinesis);
-        UpdateVisibleObject(telekinesis);
-        
     }
 
     public override void OnExit(Telekinesis telekinesis)
@@ -27,6 +27,7 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
         if (telekinesis.Closest.TryGetComponent(out Outline outline))
             outline.enabled = false;
     }
+
     private void UpdateVisibleObject(Telekinesis telekinesis)
     {
         telekinesis.VisibleObjects.Clear();
@@ -41,6 +42,7 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
             }
         }
     }
+
     private GameObject GetClosestObject(List<GameObject> targetList, Vector3 targetPosition)
     {
         GameObject closest = null;
@@ -63,26 +65,19 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
     private void RaycastController(Telekinesis telekinesis)
     {
         Ray ray = telekinesis.MainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, telekinesis.maxDistance))
-        {
-            telekinesis.Closest = GetClosestObject(telekinesis.VisibleObjects, hit.point);
-        }
-        else
-        {
-            if (!telekinesis.Closest) return;
-            telekinesis.Closest = GetClosestObject(telekinesis.VisibleObjects, telekinesis.MainCamera.transform.position);
-        }
+        telekinesis.Closest = GetClosestObject(telekinesis.VisibleObjects,
+            Physics.Raycast(ray, out RaycastHit hit, telekinesis.maxDistance)
+                ? hit.point
+                : telekinesis.MainCamera.transform.position);
     }
+
     private void OutlineController(Telekinesis telekinesis)
     {
         if (telekinesis.Closest)
         {
             foreach (var target in telekinesis.VisibleObjects)
-            {
                 if (target.TryGetComponent(out Outline outline))
                     outline.enabled = false;
-            }
-
             if (telekinesis.Closest.TryGetComponent(out Outline closesOutline))
                 closesOutline.enabled = true;
         }
