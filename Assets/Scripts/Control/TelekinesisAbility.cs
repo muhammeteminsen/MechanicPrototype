@@ -100,8 +100,9 @@ public class TelekinesisAbility : MonoBehaviour
             forwardLayer.fillAmount = targetAmount;
             _defaultAbilityAmount = targetAmount;
             float endValue = 0;
-            LayerAnimation(tween: () => layers.transform.DOScaleY(endValue, 0.1f),
-                onComplete: () => { LayerColorChange(forwardLayer, abilityNormalColor); });
+            LayerColorChange(forwardLayer, abilityNormalColor);
+            await UniTask.WaitForSeconds(.2f, cancellationToken: _cts.Token);
+            LayerAnimation(tween: () => layers.transform.DOScaleY(endValue, 0.1f));
             foreach (var kvp in _layerDict) LayerAnimation(() => kvp.Key.DOFade(endValue, 0.1f));
         }
         catch (OperationCanceledException)
