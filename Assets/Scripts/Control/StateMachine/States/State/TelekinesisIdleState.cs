@@ -65,10 +65,30 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
     private void RaycastController(Telekinesis telekinesis)
     {
         Ray ray = telekinesis.MainCamera.ScreenPointToRay(Input.mousePosition);
-        telekinesis.Closest = GetClosestObject(telekinesis.VisibleObjects,
-            Physics.Raycast(ray, out RaycastHit hit, telekinesis.maxDistance)
-                ? hit.point
-                : telekinesis.MainCamera.transform.position);
+
+        Vector3 targetPoint = telekinesis.MainCamera.transform.position;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, telekinesis.maxDistance))
+        {
+            targetPoint = hit.point;
+        }
+        
+        List<GameObject> visibleTargets = new List<GameObject>();
+        foreach (var obj in telekinesis.VisibleObjects)
+        {
+            if (obj == null) continue;
+            if (!obj.TryGetComponent(out Collider col)) continue;
+
+            Vector3 objPos = obj.transform.position;
+            if (Physics.Linecast(telekinesis.MainCamera.transform.position, objPos, out RaycastHit blockHit))
+            {
+                if (blockHit.collider != col)
+                    continue;
+            }
+
+            visibleTargets.Add(obj);
+        }
+        telekinesis.Closest = GetClosestObject(visibleTargets, targetPoint);
     }
 
     private void OutlineController(Telekinesis telekinesis)

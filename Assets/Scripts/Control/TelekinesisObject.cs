@@ -5,6 +5,8 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Outline))]
 public class TelekinesisObject : MonoBehaviour, ITelekenisable
 {
     private Rigidbody _rb;
@@ -16,6 +18,7 @@ public class TelekinesisObject : MonoBehaviour, ITelekenisable
         if (TryGetComponent(out Rigidbody rb))
         {
             _rb = rb;
+            _rb.isKinematic = false;
             _rb.useGravity = false;
             _initialDamping = _rb.linearDamping;
             _rb.linearDamping = telekinesis.holdingDamping;
