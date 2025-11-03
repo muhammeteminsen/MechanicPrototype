@@ -67,11 +67,9 @@ public class TelekinesisAbility : MonoBehaviour
         }
         catch (OperationCanceledException)
         {
-            Debug.LogWarning("DecreaseBar canceled");
         }
         finally
         {
-            Debug.Log("DecreaseBar finished");
         }
     }
 
@@ -107,11 +105,9 @@ public class TelekinesisAbility : MonoBehaviour
         }
         catch (OperationCanceledException)
         {
-            Debug.LogWarning("IncreaseBar canceled");
         }
         finally
         {
-            Debug.Log("IncreaseBar finished");
         }
     }
 

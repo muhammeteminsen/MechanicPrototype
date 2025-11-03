@@ -24,7 +24,6 @@ public class StateBase<T> where T : class
     public void Update()
     {
         _currentState?.OnUpdate(_context);
-        Debug.Log($"Current State: {_currentState?.GetType().Name}");
     }
     public void FixedUpdate()
     {

@@ -63,10 +63,10 @@ namespace Control
             _stateBase.ChangeState(telekinesis);
         }
 
-        public Vector3 Direction()
+        public float Direction()
         {
-            Vector3 direction = holdingPoint.position - Closest.transform.position;
-            return direction;
+            float directionSqr = (holdingPoint.position - Closest.transform.position).sqrMagnitude;
+            return directionSqr;
         }
 
         private Tweener _jitterCameraTweener;
