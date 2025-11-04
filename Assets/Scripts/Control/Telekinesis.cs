@@ -44,6 +44,7 @@ namespace Control
 
         private void Start()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             _stateBase = new StateBase<Telekinesis>(this);
             _stateBase.ChangeState(new TelekinesisIdleState());
         }

@@ -14,31 +14,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -12.249
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.4792
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -15.0318
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.35172182
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.3900405
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.58646476
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.6166193
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -67,6 +67,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e29137146b91964ab3720525e08920d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 286881791}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e29137146b91964ab3720525e08920d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1695334323197621440}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e29137146b91964ab3720525e08920d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 463698088517004957}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e29137146b91964ab3720525e08920d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5111877545427970849}
   m_SourcePrefab: {fileID: 100100000, guid: 7e29137146b91964ab3720525e08920d, type: 3}
 --- !u!1 &6603537018815479444 stripped
 GameObject:
@@ -95,3 +104,60 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7920825645471129459, guid: 65919622f0efae144b9bc96eab7b6097, type: 2}
+--- !u!54 &1695334323197621440
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6603537018815479444}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &463698088517004957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6603537018815479444}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 1
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &5111877545427970849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6603537018815479444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647cfb3d658921f439ffdc7bbcfe8eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TelekinesisObject

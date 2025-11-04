@@ -4,6 +4,7 @@ using Control;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Outline))]
@@ -18,6 +19,7 @@ public class TelekinesisObject : MonoBehaviour, ITelekenisable
         if (TryGetComponent(out Rigidbody rb))
         {
             _rb = rb;
+            _rb.mass = Random.Range(25f, 35f);
             _rb.isKinematic = false;
             _rb.useGravity = false;
             _initialDamping = _rb.linearDamping;
@@ -92,7 +94,7 @@ public class TelekinesisObject : MonoBehaviour, ITelekenisable
             Quaternion.LookRotation(mainCamera.transform.forward, Vector3.up), Time.deltaTime * 5f);
     }
 
-
+    private Action _onThrowComplete;
     public void Throw(float throwForce, Camera mainCamera, float maxDistance)
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -101,7 +103,14 @@ public class TelekinesisObject : MonoBehaviour, ITelekenisable
         _rb.linearVelocity = Vector3.zero;
         _rb.linearDamping = _initialDamping;
         _rb.useGravity = true;
-        _rb.AddForce(direction * throwForce, ForceMode.Impulse);
+        _rb.AddForce(direction * throwForce, ForceMode.VelocityChange);
+        _onThrowComplete = () => { _rb.mass = 1f; };
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        _onThrowComplete?.Invoke();
+        _onThrowComplete = null;
     }
 
     public void CancellationToken()

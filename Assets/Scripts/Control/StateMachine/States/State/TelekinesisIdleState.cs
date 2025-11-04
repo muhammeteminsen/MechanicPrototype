@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Control;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
 
     public override void OnUpdate(Telekinesis telekinesis)
     {
-        if (Input.GetKeyDown(KeyCode.E) && telekinesis.TelekinesisAbility.IsUseAbility())
+        if (telekinesis.TelekinesisAbility.IsUseAbility() && Input.GetKeyDown(KeyCode.E))
         {
             telekinesis.ChangeState(new TelekinesisLiftState());
             return;
@@ -24,6 +25,7 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
 
     public override void OnExit(Telekinesis telekinesis)
     {
+        if (telekinesis.Closest == null) return;
         if (telekinesis.Closest.TryGetComponent(out Outline outline))
             outline.enabled = false;
     }
@@ -65,30 +67,30 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
     private void RaycastController(Telekinesis telekinesis)
     {
         Ray ray = telekinesis.MainCamera.ScreenPointToRay(Input.mousePosition);
-
-        Vector3 targetPoint = telekinesis.MainCamera.transform.position;
-
-        if (Physics.Raycast(ray, out RaycastHit hit, telekinesis.maxDistance))
-        {
-            targetPoint = hit.point;
-        }
         
-        List<GameObject> visibleTargets = new List<GameObject>();
-        foreach (var obj in telekinesis.VisibleObjects)
-        {
-            if (obj == null) continue;
-            if (!obj.TryGetComponent(out Collider col)) continue;
+        List<GameObject> unobstructedObjects = new List<GameObject>();
 
-            Vector3 objPos = obj.transform.position;
-            if (Physics.Linecast(telekinesis.MainCamera.transform.position, objPos, out RaycastHit blockHit))
+        foreach (var visibleObject in telekinesis.VisibleObjects)
+        {
+            if (visibleObject == null) continue;
+            if (!visibleObject.TryGetComponent(out Collider col)) continue;
+
+            Vector3 objPos = visibleObject.transform.position;
+            
+            if (Physics.Linecast(telekinesis.MainCamera.transform.position, objPos, out RaycastHit hit))
             {
-                if (blockHit.collider != col)
+                if (hit.collider != col)
                     continue;
             }
 
-            visibleTargets.Add(obj);
+            unobstructedObjects.Add(visibleObject);
         }
-        telekinesis.Closest = GetClosestObject(visibleTargets, targetPoint);
+        telekinesis.Closest = GetClosestObject(
+            unobstructedObjects,
+            Physics.Raycast(ray, out RaycastHit rayHit, telekinesis.maxDistance)
+                ? rayHit.point
+                : telekinesis.MainCamera.transform.position
+        );
     }
 
     private void OutlineController(Telekinesis telekinesis)

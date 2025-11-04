@@ -14,27 +14,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -17.615
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.4558
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -5.474
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9707335
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.24015939
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalRotation.z
@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -27.792002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -67,6 +67,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1832359372}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2437354218778427082}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3591724468937635005}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6248180439810587443}
   m_SourcePrefab: {fileID: 100100000, guid: 5e37d2cabfa4326499388da87efdfe78, type: 3}
 --- !u!1 &5753629148092852316 stripped
 GameObject:
@@ -95,3 +104,60 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3172048589975180309, guid: 23b9ac62a9b92864386aae0d6868eb4b, type: 2}
+--- !u!54 &2437354218778427082
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753629148092852316}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &3591724468937635005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753629148092852316}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 1
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &6248180439810587443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753629148092852316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647cfb3d658921f439ffdc7bbcfe8eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TelekinesisObject
