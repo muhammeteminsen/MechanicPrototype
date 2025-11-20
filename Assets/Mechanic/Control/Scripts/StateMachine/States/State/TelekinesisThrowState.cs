@@ -1,5 +1,3 @@
-using Control;
-using UnityEngine;
 
 public class TelekinesisThrowState : StateAction<Telekinesis>
 {

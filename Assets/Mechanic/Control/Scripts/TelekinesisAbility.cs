@@ -22,7 +22,6 @@ public class TelekinesisAbility : MonoBehaviour
     private CancellationTokenSource _cts;
     private float _initialLayersScaleY;
     private bool _isAbilityOver;
-    private readonly Dictionary<Image, float> _layerDict = new Dictionary<Image, float>();
 
     private void Awake()
     {
@@ -33,15 +32,11 @@ public class TelekinesisAbility : MonoBehaviour
     {
         _defaultAbilityAmount = forwardLayer.fillAmount;
         _initialLayersScaleY = layers.transform.localScale.y;
-        Image[] layersImage = layers.GetComponentsInChildren<Image>(includeInactive: true);
-        foreach (var layer in layersImage)
-            _layerDict.Add(layer, layer.color.a);
     }
 
     public async UniTaskVoid Decrease()
     {
         LayerAnimation(tween: () => layers.transform.DOScaleY(_initialLayersScaleY, 0.1f));
-        foreach (var kvp in _layerDict) LayerAnimation(() => kvp.Key.DOFade(kvp.Value, 0.1f));
         float initialAmount = forwardLayer.fillAmount;
         float targetAmount = Mathf.Clamp01(initialAmount - abilityAmount / 100);
         try
@@ -101,7 +96,6 @@ public class TelekinesisAbility : MonoBehaviour
             LayerColorChange(forwardLayer, abilityNormalColor);
             await UniTask.WaitForSeconds(.2f, cancellationToken: _cts.Token);
             LayerAnimation(tween: () => layers.transform.DOScaleY(endValue, 0.1f));
-            foreach (var kvp in _layerDict) LayerAnimation(() => kvp.Key.DOFade(endValue, 0.1f));
         }
         catch (OperationCanceledException)
         {

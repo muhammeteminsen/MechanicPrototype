@@ -1,13 +1,12 @@
 using System;
 using System.Threading;
-using Control;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Outline))]
+[RequireComponent(typeof(QuickOutline))]
 public class TelekinesisObject : MonoBehaviour, ITelekinesisable
 {
     private Rigidbody _rb;

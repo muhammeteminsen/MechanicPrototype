@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Control;
 using UnityEngine;
 
 public class TelekinesisIdleState : StateAction<Telekinesis>
@@ -26,7 +24,7 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
     public override void OnExit(Telekinesis telekinesis)
     {
         if (telekinesis.Closest == null) return;
-        if (telekinesis.Closest.TryGetComponent(out Outline outline))
+        if (telekinesis.Closest.TryGetComponent(out QuickOutline outline))
             outline.enabled = false;
     }
     private float _updateTimer;
@@ -101,9 +99,9 @@ public class TelekinesisIdleState : StateAction<Telekinesis>
         if (telekinesis.Closest)
         {
             foreach (var target in telekinesis.VisibleObjects)
-                if (target.TryGetComponent(out Outline outline))
+                if (target.TryGetComponent(out QuickOutline outline))
                     outline.enabled = false;
-            if (telekinesis.Closest.TryGetComponent(out Outline closesOutline))
+            if (telekinesis.Closest.TryGetComponent(out QuickOutline closesOutline))
                 closesOutline.enabled = true;
         }
     }

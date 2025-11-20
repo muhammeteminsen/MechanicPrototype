@@ -2721,10 +2721,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cd400f894784a45946b81906919d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Telekenise
-  depthOfFieldFeedback: {fileID: 0}
   animationController: {fileID: 6982812146328379582}
-  audioController: {fileID: 0}
   maxDistance: 25
+  liftFeedback: {fileID: 0}
+  holdingFeedback: {fileID: 0}
+  throwFeedback: {fileID: 0}
+  impactFeedback: {fileID: 0}
+  holdingEffectPrefab: {fileID: 0}
+  throwEffectPrefab: {fileID: 0}
+  liftEffectPrefab: {fileID: 0}
   throwForce: 50
   holdingPoint: {fileID: 1559586685}
   holdingSpeed: 150
@@ -4948,6 +4953,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
     - {fileID: 3743973077107091703, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+    - {fileID: 2246899904397124371, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
