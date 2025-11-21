@@ -1,11 +1,14 @@
+using System.Linq;
 using UnityEngine;
 
 public class ACM_IdleState : StateAction<ChainAssassination>
 {
-    public override void OnEnter(ChainAssassination telekinesis)
+    public override void OnEnter(ChainAssassination context)
     {
-        Time.timeScale = 1f;
+        foreach (var enemy in context.EnemyQueue.ToList())
+            enemy.OnDeselected(context);
     }
+
     public override void OnUpdate(ChainAssassination assassination)
     {
         if (Input.GetKeyDown(KeyCode.R))
