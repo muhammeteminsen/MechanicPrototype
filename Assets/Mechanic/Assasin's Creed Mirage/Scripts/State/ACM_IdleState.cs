@@ -5,7 +5,7 @@ public class ACM_IdleState : StateAction<ChainAssassination>
 {
     public override void OnEnter(ChainAssassination context)
     {
-        foreach (var enemy in context.EnemyQueue.ToList())
+        foreach (var enemy in context.EnemyList.ToList())
             enemy.OnDeselected(context);
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class CopyAnimationData
 {
     public AnimationClip clip;
     [Range(0f,1f)]public float threshold;
+    public AnimationClip targetClip;
+    public float startTime;
 }
 public class ChainAssassination : MonoBehaviour
 {
@@ -15,13 +18,14 @@ public class ChainAssassination : MonoBehaviour
     public List<CopyAnimationData> copyAnimationData;
     public GameObject effectPrefab;
     [SerializeField] private string animationClipKey = "Attack";
-    
+    public MMFeedbacks assassinateFeedback;
     public LayerMask enemyLayer;
     public Image crosshair;
     public Camera MainCamera => Camera.main;
     public ACM_Move Move => GetComponent<ACM_Move>();
     private Animator Animator => GetComponent<Animator>();
-    public List<ACM_Enemy> EnemyQueue { get; set; }= new List<ACM_Enemy>();
+    public List<ACM_Enemy> EnemyList { get; set; }= new List<ACM_Enemy>();
+    public List<ACM_Enemy> EnemyTempList { get; set; }= new List<ACM_Enemy>();
     private AnimatorOverrideController _overrideController;
 
     private void Awake()
@@ -48,18 +52,30 @@ public class ChainAssassination : MonoBehaviour
        currentState = _stateMachine.ChangeState(newState);
     }
 
-    public AnimationClip SetAnimationClip(AnimationClip clip)
+    public AnimationClip PlayAnimation(AnimationClip clip)
     {
         _overrideController[animationClipKey] = clip;
         Animator.Play(animationClipKey, 0, 0f);
         Animator.speed = 1f;
         return clip;
     }
+    
+    public void PauseAnimation()
+    {
+        Animator.speed = 0f;
+        assassinateFeedback.PlayFeedbacks();
+    }
+
+    public void ResumeAnimation()
+    {
+        Animator.speed = 1f;
+    }
+    
     private void OnGUI()
     {
         GUIStyle style = new GUIStyle
         {
-            fontSize = 40,
+            fontSize = 10,
             normal =
             {
                 textColor = Color.black

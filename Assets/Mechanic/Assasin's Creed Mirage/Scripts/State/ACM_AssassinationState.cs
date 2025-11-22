@@ -21,41 +21,63 @@ public class ACM_AssassinationState : StateAction<ChainAssassination>
 
     private async UniTaskVoid Assassination(ChainAssassination context)
     {
-        ACM_Enemy currentEnemyObj = context.EnemyQueue[0];
-        if (currentEnemyObj.EffectInstance.TryGetComponent(out ACM_AnimationSwapper animationSwapper))
+        ACM_Enemy currentEnemyObj = context.EnemyList[0];
+        if (currentEnemyObj.EffectInstance.TryGetComponent(out ACM_AnimationSwapper instanceAnimationSwapper) &&
+            currentEnemyObj.TryGetComponent(out ACM_AnimationSwapper enemyAnimationSwapper))
         {
-            AnimationClip clip = InitializeAnimation(animationSwapper, context);
+            AnimationClip clip = InitializeAnimation(instanceAnimationSwapper, context);
             PlayerTransformation(currentEnemyObj, context);
             currentEnemyObj.OnDeselected(context);
-            float duration = clip.length * context.copyAnimationData[animationSwapper.RandomIndex].threshold;
+            float duration = clip.length * context.copyAnimationData[instanceAnimationSwapper.RandomIndex].threshold;
             await UniTask.WaitForSeconds(duration);
-            Object.Destroy(currentEnemyObj.gameObject);
+            InitializeAnimation(enemyAnimationSwapper, context, instanceAnimationSwapper);
+            enemyAnimationSwapper.PauseAnimation();
+            context.PauseAnimation();
+            await UniTask.WaitForSeconds(1f);
+            context.ResumeAnimation();
             HandleTransition(context);
         }
     }
 
-    private AnimationClip InitializeAnimation(ACM_AnimationSwapper animationSwapper, ChainAssassination context)
+    private AnimationClip InitializeAnimation(ACM_AnimationSwapper instanceAnimationSwapper, ChainAssassination context)
     {
-        AnimationClip instanceClip = animationSwapper.InstanceClip;
-        AnimationClip clip = context.SetAnimationClip(instanceClip);
+        AnimationClip instanceClip = instanceAnimationSwapper.InstanceClip;
+        AnimationClip clip = context.PlayAnimation(instanceClip);
         return clip;
     }
+
+    private void InitializeAnimation(ACM_AnimationSwapper enemyAnimationSwapper, ChainAssassination context,
+        ACM_AnimationSwapper instanceAnimationSwapper)
+    {
+        enemyAnimationSwapper.SetSpecificClip(
+            context.copyAnimationData[instanceAnimationSwapper.RandomIndex].targetClip,
+            1f
+        , context.copyAnimationData[instanceAnimationSwapper.RandomIndex].startTime);
+    }
+
     private void PlayerTransformation(ACM_Enemy currentEnemyObj, ChainAssassination context)
     {
         Vector3 targetPosition = currentEnemyObj.effectPos.position;
         Quaternion targetRotation = currentEnemyObj.effectPos.rotation;
-           
+
         context.transform.position = targetPosition;
         context.transform.rotation = targetRotation;
     }
 
     private void HandleTransition(ChainAssassination context)
     {
-        if (context.EnemyQueue.Count <= 0)
+        if (context.EnemyList.Count <= 0)
         {
+            foreach (var enemy in context.EnemyTempList)
+            {
+                ACM_AnimationSwapper animationSwapper = enemy.GetComponent<ACM_AnimationSwapper>();
+                animationSwapper.ResumeAnimation();
+            }
+            context.EnemyTempList.Clear();
             context.ChangeState(new ACM_IdleState());
             return;
         }
+
         context.ChangeState(new ACM_AssassinationState());
     }
 }

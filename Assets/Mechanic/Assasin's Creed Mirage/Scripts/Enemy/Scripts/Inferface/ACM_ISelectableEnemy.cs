@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public interface ACM_ISelectableEnemy
 {
    void OnSelectable(ChainAssassination context);

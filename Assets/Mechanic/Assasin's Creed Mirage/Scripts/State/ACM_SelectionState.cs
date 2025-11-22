@@ -67,7 +67,7 @@ public class ACM_SelectionState : StateAction<ChainAssassination>
     {
         ACM_Enemy enemyClass = enemy as ACM_Enemy;
         if (enemyClass == null) return;
-        if (!context.EnemyQueue.Contains(enemyClass))
+        if (!context.EnemyList.Contains(enemyClass))
             enemy.OnSelected(context);
         else
             enemy.OnDeselected(context);
@@ -78,7 +78,7 @@ public class ACM_SelectionState : StateAction<ChainAssassination>
     private void HoveredEnemy(ChainAssassination context, ACM_ISelectableEnemy enemy)
     {
         ACM_Enemy enemyClass = enemy as ACM_Enemy;
-        if (context.EnemyQueue.Contains(enemyClass))
+        if (context.EnemyList.Contains(enemyClass))
         {
             ClearHover(context);
         }

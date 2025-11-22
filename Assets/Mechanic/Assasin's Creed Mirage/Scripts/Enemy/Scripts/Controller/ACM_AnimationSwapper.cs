@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ACM_AnimationSwapper : MonoBehaviour
 {
@@ -13,13 +15,33 @@ public class ACM_AnimationSwapper : MonoBehaviour
         overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = overrideController;
     }
-    public void SetAnimationClip(ChainAssassination context)
+
+    private void Update()
+    {
+        Debug.Log($"GameObject Name:  {gameObject.name}, Current Animation Clip: {InstanceClip?.name}, Random Index: {RandomIndex}");
+    }
+
+    public void SetSpecificClip(AnimationClip targetClip, float animationSpeed = 0f, float startTime = 0f)
+    {
+        overrideController[animationKey] = targetClip;
+        animator.Play(animationKey, 0, startTime);
+        animator.speed = animationSpeed;
+        InstanceClip = targetClip;
+    }
+    public void PlayRandomClip(ChainAssassination context, float startTime = 0f)
     {
         RandomIndex = Random.Range(0, context.copyAnimationData.Count);
         AnimationClip selectedClip = context.copyAnimationData[RandomIndex].clip;
-        overrideController[animationKey] = selectedClip;
-        animator.Play(animationKey, 0, 0f);
+        SetSpecificClip(selectedClip,startTime: startTime);
+    }
+
+    public void PauseAnimation()
+    {
         animator.speed = 0f;
-        InstanceClip = selectedClip;
+    }
+    
+    public void ResumeAnimation()
+    {
+        animator.speed = 1f;
     }
 }

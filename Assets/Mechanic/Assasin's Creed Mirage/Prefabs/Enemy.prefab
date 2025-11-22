@@ -313,6 +313,7 @@ GameObject:
   - component: {fileID: 5111779233069966293}
   - component: {fileID: 55823922660504047}
   - component: {fileID: 1952067937154858958}
+  - component: {fileID: 4627591015298954600}
   - component: {fileID: 8170380862118837073}
   - component: {fileID: 2598722495204686356}
   m_Layer: 6
@@ -378,6 +379,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionIndicator: {fileID: 6658274234810310161}
   effectPos: {fileID: 3937688934804787836}
+--- !u!114 &4627591015298954600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455259463267418481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69919a478476ad74e8f7b0de2de99ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ACM.ChainAssasination::ACM_AnimationSwapper
+  animationKey: Die0
 --- !u!114 &8170380862118837073
 MonoBehaviour:
   m_ObjectHideFlags: 0

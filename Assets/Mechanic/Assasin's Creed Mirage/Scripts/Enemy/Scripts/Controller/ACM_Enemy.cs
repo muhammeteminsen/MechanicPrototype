@@ -26,23 +26,25 @@ public class ACM_Enemy : MonoBehaviour, ACM_ISelectableEnemy
    
     public void OnSelected(ChainAssassination context)
     {
-        if(context.EnemyQueue.Contains(this)) return;
-        context.EnemyQueue.Add(this);
+        if(context.EnemyList.Contains(this)) return;
+        context.EnemyList.Add(this);
         selectionIndicator.color = Color.red;
         _outline.enabled = true;
         EffectInstance = Instantiate(context.effectPrefab, effectPos.position, Quaternion.identity);
         if (EffectInstance.TryGetComponent(out ACM_AnimationSwapper animationSwapper))
-            animationSwapper.SetAnimationClip(context);
+            animationSwapper.PlayRandomClip(context);
     }
     
     public void OnDeselected(ChainAssassination context)
     {
         OnUnSelect(context);
         _outline.enabled = false;
-        context.EnemyQueue.Remove(this);
+        context.EnemyList.Remove(this);
+        context.EnemyTempList.Add(this);
         Destroy(EffectInstance);
     }
-
+    
+    
     public void OnUnSelect(ChainAssassination context)
     {
         selectionIndicator.enabled = false;
